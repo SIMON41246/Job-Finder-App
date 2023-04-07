@@ -4,20 +4,19 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.jobsapi.R
 import com.example.jobsapi.ViewModels.MyviewModel
 import com.example.jobsapi.data.Data
 import com.example.jobsapi.databinding.ActivityMainBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
 class MainActivity : AppCompatActivity(), Adapter.Readmore {
     private var myviewmodel: MyviewModel? = null
     private lateinit var binding: ActivityMainBinding
+    lateinit var button: Button
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity(), Adapter.Readmore {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         myviewmodel!!.getdatajob()
 
@@ -40,7 +40,28 @@ class MainActivity : AppCompatActivity(), Adapter.Readmore {
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun click(data: Data) {
+        binding.wv.visibility = View.VISIBLE
+        binding.wv.settings.javaScriptEnabled = true
+        binding.wv.loadData(data.description, "text/html", "UTF-8")
+        binding.btn.visibility = View.VISIBLE
+        binding.btn.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data.url))
+            startActivity(browserIntent)
+        }
+
+        /*
+
+
+        val intent = Intent(this, WebViewActivity::class.java)
+        intent.putExtra("data", data.description)
+        startActivity(intent)
+
+
+
+
+
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.itembottomsheet, null)
         val companyName = view.findViewById<TextView>(R.id.companyName)
@@ -58,5 +79,16 @@ class MainActivity : AppCompatActivity(), Adapter.Readmore {
         slug.text = data.slug
         dialog.setContentView(view)
         dialog.show()
+
+        */
     }
+
+    override fun onBackPressed() {
+        if (binding.wv.visibility == View.VISIBLE) {
+            binding.wv.visibility = View.GONE
+            binding.btn.visibility = View.GONE
+        }
+    }
+
+
 }
