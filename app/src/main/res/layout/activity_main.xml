@@ -19,12 +19,17 @@
         android:layout_height="match_parent"
         android:visibility="invisible" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:layout_marginBottom="10sp"
+        android:background="@drawable/corners"
+        android:backgroundTint="@color/purple_200"
+        android:paddingStart="30sp"
+        android:paddingEnd="30sp"
         android:text="Join Us"
         android:visibility="invisible" />
 

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.jobsapi.ViewModels.MyviewModel
@@ -87,6 +88,9 @@ class MainActivity : AppCompatActivity(), Adapter.Readmore {
         if (binding.wv.visibility == View.VISIBLE) {
             binding.wv.visibility = View.GONE
             binding.btn.visibility = View.GONE
+        } else {
+            Toast.makeText(this, "End App", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
